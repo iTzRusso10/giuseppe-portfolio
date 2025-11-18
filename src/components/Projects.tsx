@@ -69,7 +69,7 @@ export function Projects() {
   return (
     <section
       id="projects"
-      className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-900 to-slate-800 relative overflow-hidden"
+      className="py-10 sm:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-900 to-slate-800 relative overflow-hidden"
     >
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -120,12 +120,12 @@ export function Projects() {
                 {/* Tags */}
                 <div className="flex flex-wrap gap-2 mb-4">
                   {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="text-xs px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300"
-                      >
-                        {tag}
-                      </span>
+                    <span
+                      key={tag}
+                      className="text-xs px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300"
+                    >
+                      {tag}
+                    </span>
                   ))}
                 </div>
 
@@ -138,10 +138,10 @@ export function Projects() {
                     <Github size={16} />
                     <span className="hidden sm:inline">Code</span>
                   </a>
-                    <a
-                      href={project.demo}
-                      className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-indigo-600 hover:shadow-lg hover:shadow-cyan-500/50 text-white transition-all duration-300 font-medium"
-                    >
+                  <a
+                    href={project.demo}
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-indigo-600 hover:shadow-lg hover:shadow-cyan-500/50 text-white transition-all duration-300 font-medium"
+                  >
                     <ExternalLink size={16} />
                     <span className="hidden sm:inline">Demo</span>
                   </a>

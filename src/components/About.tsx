@@ -25,7 +25,7 @@ export function About() {
   return (
     <section
       id="about"
-      className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-800 to-slate-900 relative"
+      className="py-10 sm:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-800 to-slate-900 relative"
     >
       {/* Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">

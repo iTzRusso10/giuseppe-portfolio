@@ -88,7 +88,7 @@ export function Navbar() {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="md:hidden pb-4 space-y-2">
+          <div className="md:hidden pb-4 space-y-2 animate-slide-down origin-top">
             {menuItems.map((item) => {
               const isHashLink = item.href.startsWith('#')
               return isHashLink ? (

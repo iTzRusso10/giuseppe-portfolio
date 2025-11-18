@@ -44,7 +44,7 @@ export function Hero() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-5xl mx-auto p-4 sm:px-6 lg:px-8 text-center">
+      <div className="relative z-10 max-w-5xl mx-auto py-10 px-4 sm:py-0 sm:px-6 lg:px-8 text-center">
         {/* Badge */}
         <div className="mb-8 inline-block animate-slide-down">
           <div className="px-4 py-2 rounded-full bg-gradient-to-r from-cyan-500/20 to-indigo-500/20 border border-cyan-400/30 backdrop-blur-sm">
