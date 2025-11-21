@@ -44,7 +44,7 @@ export function Projects() {
                 <img
                   src={project.image}
                   alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  className="w-full h-full object-cover transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-60"></div>
               </div>
@@ -73,14 +73,19 @@ export function Projects() {
                 {/* Links */}
                 <div className="flex gap-4">
                   <a
+                    target="_blank"
                     href={project.github}
+                    onClick={(e) => e.stopPropagation()}
                     className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-800 hover:bg-blue-600 text-white transition-colors duration-300 font-medium"
                   >
                     <Github size={16} />
                     <span className="hidden sm:inline">Code</span>
                   </a>
+
                   <a
+                    target="_blank"
                     href={project.demo}
+                    onClick={(e) => e.stopPropagation()}
                     className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-indigo-600 hover:shadow-lg hover:shadow-cyan-500/50 text-white transition-all duration-300 font-medium"
                   >
                     <ExternalLink size={16} />

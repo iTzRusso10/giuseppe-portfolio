@@ -1,5 +1,6 @@
-import { Link, createFileRoute } from '@tanstack/react-router'
+import { Link, createFileRoute, useNavigate } from '@tanstack/react-router'
 import { ArrowLeft, ExternalLink, Github, Star } from 'lucide-react'
+import { useState } from 'react'
 import dashlyImage from '@/images/dashly.png'
 import fitnessImage from '@/images/image.png'
 
@@ -39,8 +40,8 @@ export const PROJECTS_DETAIL: Array<ProjectDetail> = [
       'Email',
       'Tanstack Router',
     ],
-    github: 'https://github.com',
-    demo: 'https://example.com',
+    github: 'https://github.com/iTzRusso10/dashly',
+    demo: 'https://dashly-two.vercel.app/',
     features: [
       'Dashboard KPI in tempo reale',
       'Grafici vendite',
@@ -71,8 +72,8 @@ export const PROJECTS_DETAIL: Array<ProjectDetail> = [
       'Email',
       'Tanstack Router',
     ],
-    github: 'https://github.com',
-    demo: 'https://example.com',
+    github: 'https://github.com/iTzRusso10/personal-trainer-page',
+    demo: 'https://personal-trainer-page-iota.vercel.app/',
     features: [
       'Hero section accattivante',
       'Portfolio trasformazioni clienti',
@@ -88,6 +89,20 @@ export const PROJECTS_DETAIL: Array<ProjectDetail> = [
 ]
 
 function ProjectsPage() {
+  const navigate = useNavigate()
+
+  const handleContactClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+    navigate({ to: '/' }).then(() => {
+      setTimeout(() => {
+        const element = document.querySelector('#contact')
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' })
+        }
+      }, 100)
+    })
+  }
+
   return (
     <div className="bg-gradient-to-b from-slate-900 to-slate-800 min-h-screen pt-32 pb-20">
       {/* Back Button */}
@@ -145,7 +160,7 @@ function ProjectsPage() {
                 <div
                   className={
                     index % 2 === 1
-                      ? 'md:order-1'
+                      ? 'md:order-1 flex flex-col justify-between'
                       : 'flex flex-col justify-between'
                   }
                 >
@@ -212,6 +227,7 @@ function ProjectsPage() {
                   {/* Links */}
                   <div className="flex gap-4">
                     <a
+                      target="_blank"
                       href={project.github}
                       className="flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-700 hover:bg-blue-600 text-white transition-colors duration-300 font-medium"
                     >
@@ -219,6 +235,7 @@ function ProjectsPage() {
                       Visualizza Codice
                     </a>
                     <a
+                      target="_blank"
                       href={project.demo}
                       className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 hover:shadow-lg hover:shadow-blue-500/50 text-white transition-all duration-300 font-medium"
                     >
@@ -242,6 +259,7 @@ function ProjectsPage() {
             diventare realtà.
           </p>
           <a
+            onClick={handleContactClick}
             href="#contact"
             className="inline-flex items-center gap-2 px-8 py-3 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold hover:shadow-lg hover:shadow-blue-500/50 transition-all duration-300"
           >

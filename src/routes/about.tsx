@@ -1,4 +1,4 @@
-import { Link, createFileRoute  } from '@tanstack/react-router'
+import { Link, createFileRoute, useNavigate } from '@tanstack/react-router'
 import { ArrowLeft, Code2, Trophy, Users, Zap } from 'lucide-react'
 
 export const Route = createFileRoute('/about')({
@@ -57,27 +57,27 @@ function AboutPage() {
 
   const experience = [
     {
-      role: 'Senior Frontend Developer',
-      company: 'Tech Startup XYZ',
-      period: '2023 - Presente',
+      role: 'Frontend Developer',
+      company: 'GBrain SRL',
+      period: '2019 - Presente',
       description:
         'Guido il team frontend nella creazione di applicazioni scalabili e performanti.',
     },
-    {
-      role: 'Full Stack Developer',
-      company: 'Digital Agency ABC',
-      period: '2021 - 2023',
-      description:
-        'Sviluppato 15+ progetti per clienti internazionali, dal design al deployment.',
-    },
-    {
-      role: 'Junior Developer',
-      company: 'Web Solutions Ltd',
-      period: '2019 - 2021',
-      description:
-        'Initio della mia carriera con focus su frontend development e UI/UX.',
-    },
   ]
+
+  const navigate = useNavigate()
+
+  const handleContactClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+    navigate({ to: '/' }).then(() => {
+      setTimeout(() => {
+        const element = document.querySelector('#contact')
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' })
+        }
+      }, 100)
+    })
+  }
 
   return (
     <div className="bg-gradient-to-b from-slate-900 to-slate-800 min-h-screen pt-32 pb-20">
@@ -221,6 +221,7 @@ function AboutPage() {
             Contattami per discutere del tuo prossimo grande progetto.
           </p>
           <a
+            onClick={handleContactClick}
             href="#contact"
             className="inline-flex items-center gap-2 px-8 py-3 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold hover:shadow-lg hover:shadow-blue-500/50 transition-all"
           >
