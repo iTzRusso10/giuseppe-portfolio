@@ -1,5 +1,7 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { ArrowLeft, ExternalLink, Github, Star } from 'lucide-react'
+import dashlyImage from '../../public/dashly.png'
+import fitnessImage from '../../public/fitness.png'
 
 export const Route = createFileRoute('/projects')({
   component: ProjectsPage,
@@ -27,8 +29,7 @@ export const PROJECTS_DETAIL: Array<ProjectDetail> = [
     description: 'Mini dashboard analytics per piccoli business.',
     longDescription:
       'Dashly ti mostra vendite giornaliere, conversion rate e ordini senza complesse integrazioni. Ideale per e-commerce locali efreelancer che vogliono crescere con dati chiari.',
-    image:
-      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1000&h=600&fit=crop',
+    image: dashlyImage,
     tags: [
       'React',
       'TypeScript',
@@ -60,8 +61,7 @@ export const PROJECTS_DETAIL: Array<ProjectDetail> = [
       'Landing page moderna per personal trainer con sistema di prenotazione integrato.',
     longDescription:
       'Ho creato una landing page completa per un personal trainer che include showcase dei servizi, portfolio delle trasformazioni clienti, sistema di prenotazione online integrato con calendario, e area clienti privata. Generato 40% più richieste di consulenza rispetto al sito precedente.',
-    image:
-      'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1000&h=600&fit=crop',
+    image: fitnessImage,
     tags: [
       'React',
       'TypeScript',
@@ -118,7 +118,7 @@ function ProjectsPage() {
           {PROJECTS_DETAIL.map((project, index) => (
             <div
               key={project.id}
-              className="group bg-gradient-to-br from-slate-800 to-slate-700 rounded-xl overflow-hidden border border-slate-600 hover:border-blue-500/50 transition-all duration-300"
+              className="group bg-gradient-to-br from-slate-800 to-slate-700 rounded-xl overflow-hidden border border-slate-600 hover:border-blue-500/50 transition-all duration-300 "
             >
               <div className="grid md:grid-cols-2 gap-8 p-8">
                 {/* Image */}
@@ -127,7 +127,7 @@ function ProjectsPage() {
                     <img
                       src={project.image}
                       alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="w-full h-full object-cover transition-transform duration-500 bg-top sm:bg-center"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-60"></div>
                     {project.featured && (
@@ -142,7 +142,13 @@ function ProjectsPage() {
                 </div>
 
                 {/* Content */}
-                <div className={index % 2 === 1 ? 'md:order-1' : ''}>
+                <div
+                  className={
+                    index % 2 === 1
+                      ? 'md:order-1'
+                      : 'flex flex-col justify-between'
+                  }
+                >
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-sm text-blue-400 font-medium">
                       {project.year}
