@@ -97,8 +97,11 @@ export function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           {/* Copyright */}
           <p className="text-gray-400 text-sm">
-            &copy; {currentYear} Giuseppe. Fatto con{' '}
-            <Heart size={14} className="inline-block text-red-500 mx-1" />
+            &copy; {currentYear} Giuseppe Russo. Fatto con
+            <Heart
+              size={16}
+              className="inline-block text-red-500 mx-1 mb-0.5"
+            />
             usando React & TailwindCSS.
           </p>
 

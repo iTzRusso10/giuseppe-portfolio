@@ -1,71 +1,11 @@
+import { useNavigate } from '@tanstack/react-router'
 import { ExternalLink, Github } from 'lucide-react'
 import { useState } from 'react'
-
-interface Project {
-  id: number
-  title: string
-  description: string
-  image: string
-  tags: Array<string>
-  github: string
-  demo: string
-  color: string
-}
-
-const PROJECTS: Array<Project> = [
-  {
-    id: 1,
-    title: 'Platform E-commerce Avanzata',
-    description:
-      'Una piattaforma e-commerce full-stack con carrello dinamico, pagamenti integrati e dashboard amministrativa. Performance ottimizzate con lazy loading e code splitting.',
-    image:
-      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500&h=300&fit=crop',
-    tags: ['React', 'TypeScript', 'Node.js', 'PostgreSQL', 'Stripe'],
-    github: 'https://github.com',
-    demo: 'https://example.com',
-    color: 'from-blue-500',
-  },
-  {
-    id: 2,
-    title: 'Dashboard Analytics Real-time',
-    description:
-      'Dashboard interattivo per visualizzare dati in tempo reale con grafici animati, filtri avanzati e export dati. Costruito con librerie di visualizzazione moderne.',
-    image:
-      'https://images.unsplash.com/photo-1551288894-20934986f212?w=500&h=300&fit=crop',
-    tags: ['React', 'D3.js', 'Recharts', 'WebSocket', 'TailwindCSS'],
-    github: 'https://github.com',
-    demo: 'https://example.com',
-    color: 'from-purple-500',
-  },
-  {
-    id: 3,
-    title: 'App Gestione Progetti Collaborativa',
-    description:
-      'Applicazione collaborativa in tempo reale per la gestione di progetti con Kanban board, assegnazioni team e notifiche push. Scalabile e user-friendly.',
-    image:
-      'https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=300&fit=crop',
-    tags: ['React', 'Firebase', 'Framer Motion', 'Redux', 'PWA'],
-    github: 'https://github.com',
-    demo: 'https://example.com',
-    color: 'from-pink-500',
-  },
-  {
-    id: 4,
-    title: 'Sistema CMS Headless',
-    description:
-      'CMS headless personalizzato con editor visuale drag-and-drop, gestione media avanzata e API REST. Perfetto per agenzie e startup.',
-    image:
-      'https://images.unsplash.com/photo-1555099962-4199f1a02dc5?w=500&h=300&fit=crop',
-    tags: ['Next.js', 'TypeScript', 'GraphQL', 'MongoDB', 'AWS'],
-    github: 'https://github.com',
-    demo: 'https://example.com',
-    color: 'from-orange-500',
-  },
-]
+import { PROJECTS_DETAIL } from '@/routes/projects'
 
 export function Projects() {
   const [hoveredId, setHoveredId] = useState<number | null>(null)
-
+  const navigate = useNavigate()
   return (
     <section
       id="projects"
@@ -91,10 +31,11 @@ export function Projects() {
 
         {/* Projects Grid */}
         <div className="grid md:grid-cols-2 gap-8">
-          {PROJECTS.map((project) => (
+          {PROJECTS_DETAIL.map((project) => (
             <div
+              onClick={() => navigate({ to: '/projects' })}
               key={project.id}
-              className="group relative rounded-xl overflow-hidden bg-gradient-to-br from-slate-800 to-slate-700 border border-slate-700 hover:border-blue-500/50 transition-all duration-300"
+              className="cursor-pointer group relative rounded-xl overflow-hidden bg-gradient-to-br from-slate-800 to-slate-700 border border-slate-700 hover:border-blue-500/50 transition-all duration-300"
               onMouseEnter={() => setHoveredId(project.id)}
               onMouseLeave={() => setHoveredId(null)}
             >
@@ -151,7 +92,7 @@ export function Projects() {
               {/* Hover gradient overlay */}
               {hoveredId === project.id && (
                 <div
-                  className={`absolute inset-0 bg-gradient-to-br ${project.color} to-transparent opacity-5 pointer-events-none`}
+                  className={`absolute inset-0 bg-gradient-to-br  to-transparent opacity-5 pointer-events-none`}
                 ></div>
               )}
             </div>

@@ -143,3 +143,8 @@ code {
     transparent calc(100% - 1px)
   );
 }
+
+/* Scroll margin per evitare che la navbar copra il contenuto */
+[id] {
+  scroll-margin-top: 5rem;
+}

@@ -29,7 +29,7 @@ export function Hero() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 pt-20 flex items-center justify-center overflow-hidden relative">
+    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-indigo-950 pt-20 flex items-center justify-center overflow-hidden relative">
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-20 left-10 w-72 h-72 bg-cyan-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float"></div>
@@ -47,9 +47,9 @@ export function Hero() {
       <div className="relative z-10 max-w-5xl mx-auto py-10 px-4 sm:py-0 sm:px-6 lg:px-8 text-center">
         {/* Badge */}
         <div className="mb-8 inline-block animate-slide-down">
-          <div className="px-4 py-2 rounded-full bg-gradient-to-r from-cyan-500/20 to-indigo-500/20 border border-cyan-400/30 backdrop-blur-sm">
-            <span className="text-sm font-medium bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent">
-              ✨ Ciao, sono Giuseppe
+          <div className="px-4 py-2 rounded-full bg-linear-to-r from-cyan-500/20 to-indigo-500/20 border border-cyan-400/30 backdrop-blur-sm">
+            <span className="text-sm font-medium bg-linear-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent">
+              ✨ Ciao, sono Giuseppe Russo
             </span>
           </div>
         </div>
@@ -66,7 +66,7 @@ export function Hero() {
         </h1>
 
         {/* Typing text - SOLO QUESTA PARTE CAMBIA */}
-        <p className="text-lg sm:text-xl text-gray-300 mb-8 min-h-[2rem]">
+        <p className="text-lg sm:text-xl text-gray-300 mb-8 min-h-8">
           {!isMounted ? (
             // Durante SSR mostra testo completo
             FULL_TEXT
@@ -97,8 +97,15 @@ export function Hero() {
           style={{ animationDelay: '0.8s' }}
         >
           <a
+            onClick={(e) => {
+              e.preventDefault()
+              const element = document.querySelector('#contact')
+              if (element) {
+                element.scrollIntoView({ behavior: 'smooth' })
+              }
+            }}
             href="#contact"
-            className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-indigo-600 text-white rounded-lg font-semibold flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 group"
+            className="px-8 py-4 bg-linear-to-r from-cyan-500 to-indigo-600 text-white rounded-lg font-semibold flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 group"
           >
             Iniziamo un progetto
             <ArrowRight
@@ -108,7 +115,14 @@ export function Hero() {
           </a>
           <a
             href="#projects"
-            className="px-8 py-4 border-2 border-cyan-500/50 text-white rounded-lg font-semibold hover:bg-cyan-500/10 transition-all duration-300"
+            onClick={(e) => {
+              e.preventDefault()
+              const element = document.querySelector('#projects')
+              if (element) {
+                element.scrollIntoView({ behavior: 'smooth' })
+              }
+            }}
+            className="px-8 py-4 border-2 border-cyan-500/50 text-white rounded-lg font-semibold hover:bg-cyan-500/10 transition-all duration-300 cursor-pointer"
           >
             Visualizza i miei progetti
           </a>

@@ -1,4 +1,4 @@
-import { Link, createFileRoute  } from '@tanstack/react-router'
+import { Link, createFileRoute } from '@tanstack/react-router'
 import { ArrowLeft, ExternalLink, Github, Star } from 'lucide-react'
 
 export const Route = createFileRoute('/projects')({
@@ -20,61 +20,68 @@ interface ProjectDetail {
   featured: boolean
 }
 
-const PROJECTS_DETAIL: Array<ProjectDetail> = [
+export const PROJECTS_DETAIL: Array<ProjectDetail> = [
   {
     id: 1,
-    title: 'Platform E-commerce Avanzata',
-    description:
-      'Una piattaforma e-commerce full-stack con carrello dinamico, pagamenti integrati e dashboard amministrativa.',
+    title: 'Dashly',
+    description: 'Mini dashboard analytics per piccoli business.',
     longDescription:
-      "Ho creato una piattaforma e-commerce completa con un frontend moderno in React e un backend robusto in Node.js. La piattaforma include un sistema di carrello intelligente, integrazione con Stripe per i pagamenti, gestione dell'inventario e una dashboard amministrativa intuitiva per gestire prodotti, ordini e clienti.",
+      'Dashly ti mostra vendite giornaliere, conversion rate e ordini senza complesse integrazioni. Ideale per e-commerce locali efreelancer che vogliono crescere con dati chiari.',
     image:
       'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1000&h=600&fit=crop',
     tags: [
       'React',
       'TypeScript',
-      'Node.js',
-      'PostgreSQL',
-      'Stripe',
+      'Tanstack Start',
+      'Calendar API',
       'TailwindCSS',
+      'Email',
+      'Tanstack Router',
     ],
     github: 'https://github.com',
     demo: 'https://example.com',
     features: [
-      'Carrello intelligente con persistenza',
-      'Sistema di pagamento Stripe',
-      'Dashboard amministrativa',
-      'Gestione inventario in tempo reale',
-      'Notifiche email automatiche',
-      'Sistema di recensioni e valutazioni',
+      'Dashboard KPI in tempo reale',
+      'Grafici vendite',
+      'Top prodotti e analisi trend',
+      'Integrazione multi-canale',
+      'Report automatici via email',
+      'Esportazione dati in Excel/PDF',
     ],
     impact:
-      'Il cliente ha visto un aumento del 150% nella conversione e una riduzione del 30% nei tempi di checkout.',
+      "I piccoli business hanno risparmiato 5+ ore settimanali nell'analisi dati e aumentato le vendite del 25% grazie a insights chiari e actionable.",
     year: 2024,
     featured: true,
   },
   {
     id: 2,
-    title: 'Dashboard Analytics Real-time',
+    title: 'Fitness - Landing Page PT',
     description:
-      'Dashboard interattivo per visualizzare dati in tempo reale con grafici animati e filtri avanzati.',
+      'Landing page moderna per personal trainer con sistema di prenotazione integrato.',
     longDescription:
-      'Una dashboard analitica costruita per visualizzare dati complessi in tempo reale. Utilizza WebSocket per gli aggiornamenti live, D3.js per visualizzazioni personalizzate e un sistema di filtri sofisticato per analizzare i dati da múltipli angoli.',
+      'Ho creato una landing page completa per un personal trainer che include showcase dei servizi, portfolio delle trasformazioni clienti, sistema di prenotazione online integrato con calendario, e area clienti privata. Generato 40% più richieste di consulenza rispetto al sito precedente.',
     image:
-      'https://images.unsplash.com/photo-1551288894-20934986f212?w=1000&h=600&fit=crop',
-    tags: ['React', 'D3.js', 'WebSocket', 'Node.js', 'Redis', 'TailwindCSS'],
+      'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1000&h=600&fit=crop',
+    tags: [
+      'React',
+      'TypeScript',
+      'Tanstack Start',
+      'Calendar API',
+      'TailwindCSS',
+      'Email',
+      'Tanstack Router',
+    ],
     github: 'https://github.com',
     demo: 'https://example.com',
     features: [
-      'Grafici animati in tempo reale',
-      'Filtri avanzati multi-dimensionali',
-      'Export dati in multipli formati',
-      'Dashboard personalizzabile',
-      'Alerting automatico',
-      'Integrazione API custom',
+      'Hero section accattivante',
+      'Portfolio trasformazioni clienti',
+      'Sistema prenotazione con calendario',
+      'Recensioni clienti',
+      'Notifiche email automatiche',
     ],
     impact:
-      "I clienti hanno risparmiato 10 ore settimanali nell'analisi manuale dei dati.",
+      'Il PT ha aumentato le prenotazioni del 40% e ridotto il tempo amministrativo di 5 ore settimanali.',
     year: 2024,
     featured: true,
   },
@@ -146,9 +153,13 @@ function ProjectsPage() {
                     </span>
                   </div>
 
-                  <h2 className="text-3xl font-bold text-white mb-3">
+                  <h2 className="text-3xl font-bold text-white mb-2">
                     {project.title}
                   </h2>
+
+                  <p className="text-cyan-400 font-medium mb-4 text-sm">
+                    {project.description}
+                  </p>
 
                   <p className="text-gray-300 mb-4">
                     {project.longDescription}
