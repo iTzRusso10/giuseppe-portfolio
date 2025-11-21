@@ -1,7 +1,7 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { ArrowLeft, ExternalLink, Github, Star } from 'lucide-react'
-import dashlyImage from '../../public/dashly.png'
-import fitnessImage from '../../public/fitness.png'
+import dashlyImage from '@/images/dashly.png'
+import fitnessImage from '@/images/image.png'
 
 export const Route = createFileRoute('/projects')({
   component: ProjectsPage,
