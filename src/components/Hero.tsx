@@ -134,21 +134,23 @@ export function Hero() {
           style={{ animationDelay: '1s' }}
         >
           <a
-            href="https://github.com"
+            target="_blank"
+            href="https://github.com/iTzRusso10"
             className="p-3 rounded-lg bg-gray-800 hover:bg-cyan-500 transition-colors duration-300"
             aria-label="GitHub"
           >
             <Github size={20} className="text-white" />
           </a>
           <a
-            href="https://linkedin.com"
+            target="_blank"
+            href="https://linkedin.com/in/giuseppe-russo-792900264/"
             className="p-3 rounded-lg bg-gray-800 hover:bg-indigo-500 transition-colors duration-300"
             aria-label="LinkedIn"
           >
             <Linkedin size={20} className="text-white" />
           </a>
           <a
-            href="mailto:giuseppe@example.com"
+            href="mailto:russo.giuseppe.dev@gmail.com"
             className="p-3 rounded-lg bg-gray-800 hover:bg-amber-500 transition-colors duration-300"
             aria-label="Email"
           >

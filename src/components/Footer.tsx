@@ -108,28 +108,24 @@ export function Footer() {
           {/* Social Links */}
           <div className="flex gap-4">
             <a
-              href="https://github.com"
+              target="_blank"
+              href="https://github.com/iTzRusso10"
               className="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 transition-colors duration-300"
               aria-label="GitHub"
             >
               <Github size={18} className="text-white" />
             </a>
             <a
-              href="https://linkedin.com"
+              target="_blank"
+              href="https://linkedin.com/in/giuseppe-russo-792900264/"
               className="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 transition-colors duration-300"
               aria-label="LinkedIn"
             >
               <Linkedin size={18} className="text-white" />
             </a>
             <a
-              href="https://twitter.com"
-              className="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 transition-colors duration-300"
-              aria-label="Twitter"
-            >
-              <Twitter size={18} className="text-white" />
-            </a>
-            <a
-              href="mailto:giuseppe@example.com"
+              target="_blank"
+              href="mailto:russo.giuseppe.dev@gmail.com"
               className="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 transition-colors duration-300"
               aria-label="Email"
             >

@@ -1,5 +1,6 @@
 import { Mail, MessageSquare, Send } from 'lucide-react'
 import { useState } from 'react'
+import { sendEmail } from '@/hook/send-email'
 
 export function Contact() {
   const [formData, setFormData] = useState({
@@ -9,6 +10,8 @@ export function Contact() {
     message: '',
   })
   const [submitted, setSubmitted] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState('')
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -17,15 +20,26 @@ export function Contact() {
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // In a real app, you would send this to a backend service
-    console.log('Form submitted:', formData)
-    setSubmitted(true)
-    setTimeout(() => {
-      setSubmitted(false)
-      setFormData({ name: '', email: '', subject: '', message: '' })
-    }, 3000)
+    setIsLoading(true)
+    setError('')
+
+    await sendEmail(formData)
+      .then((result) => {
+        if (result.success) {
+          setSubmitted(true)
+          setFormData({ name: '', email: '', subject: '', message: '' })
+        } else {
+          setError(result.error || "Errore nell'invio del messaggio")
+        }
+      })
+      .catch((err) => {
+        setError(err.message || "Errore nell'invio del messaggio")
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
 
   return (
@@ -60,10 +74,10 @@ export function Contact() {
             <h3 className="text-lg font-bold text-white mb-2">Email</h3>
             <p className="text-gray-400 mb-4">Contattami direttamente</p>
             <a
-              href="mailto:giuseppe@example.com"
+              href="mailto:russo.giuseppe.dev@gmail.com"
               className="text-blue-400 hover:text-blue-300 font-medium transition-colors"
             >
-              giuseppe@example.com
+              russo.giuseppe.dev@gmail.com
             </a>
           </div>
 
@@ -75,7 +89,9 @@ export function Contact() {
             <h3 className="text-lg font-bold text-white mb-2">Messenger</h3>
             <p className="text-gray-400 mb-4">Parla con me in tempo reale</p>
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/giuseppe-russo-792900264/"
+              aria-label="LinkedIn"
+              target="_blank"
               className="text-purple-400 hover:text-purple-300 font-medium transition-colors"
             >
               LinkedIn Message
@@ -91,11 +107,12 @@ export function Contact() {
             <p className="text-gray-400 mb-4">Inviami un messaggio</p>
             <button
               className="text-pink-400 hover:text-pink-300 font-medium transition-colors scroll-smooth"
-              onClick={() =>
-                window.scrollTo({
-                  top: document.getElementById('contact-form')?.offsetTop,
-                })
-              }
+              onClick={() => {
+                const element = document.querySelector('#contact-form')
+                if (element) {
+                  element.scrollIntoView({ behavior: 'smooth' })
+                }
+              }}
             >
               Scorri giù
             </button>
@@ -204,14 +221,22 @@ export function Contact() {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full px-6 py-3 bg-gradient-to-r from-cyan-500 to-indigo-600 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 flex items-center justify-center gap-2 group"
+                disabled={isLoading}
+                className="w-full px-6 py-3 bg-gradient-to-r from-cyan-500 to-indigo-600 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <span>Invia il messaggio</span>
-                <Send
-                  size={18}
-                  className="group-hover:translate-x-1 transition-transform"
-                />
+                <span>
+                  {isLoading ? 'Invio in corso...' : 'Invia il messaggio'}
+                </span>
+                {!isLoading && (
+                  <Send
+                    size={18}
+                    className="group-hover:translate-x-1 transition-transform"
+                  />
+                )}
               </button>
+              {error && (
+                <p className="text-red-400 text-sm text-center">{error}</p>
+              )}
             </form>
           )}
         </div>
@@ -223,22 +248,20 @@ export function Contact() {
           </p>
           <div className="flex gap-4 justify-center">
             <a
-              href="https://github.com"
+              aria-label="GitHub"
+              target="_blank"
+              href="https://github.com/iTzRusso10"
               className="px-6 py-2 rounded-lg bg-gray-800 hover:bg-cyan-600 text-white transition-colors duration-300 font-medium"
             >
               GitHub
             </a>
             <a
-              href="https://linkedin.com"
+              aria-label="LinkedIn"
+              target="_blank"
+              href="https://www.linkedin.com/in/giuseppe-russo-792900264/"
               className="px-6 py-2 rounded-lg bg-gray-800 hover:bg-indigo-600 text-white transition-colors duration-300 font-medium"
             >
               LinkedIn
-            </a>
-            <a
-              href="https://twitter.com"
-              className="px-6 py-2 rounded-lg bg-gray-800 hover:bg-amber-600 text-white transition-colors duration-300 font-medium"
-            >
-              Twitter
             </a>
           </div>
         </div>
