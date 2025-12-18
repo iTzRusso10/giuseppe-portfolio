@@ -25,6 +25,7 @@ export function Navbar() {
     { label: 'Su di me', href: '/about' },
     { label: 'Progetti', href: '/projects' },
     { label: 'Contatti', href: '#contact' },
+    { label: 'Prezzi', href: '/pricing' },
   ]
 
   return (
