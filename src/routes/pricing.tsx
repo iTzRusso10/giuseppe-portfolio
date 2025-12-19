@@ -135,7 +135,7 @@ function PricingPage() {
               >
                 {pkg.popular && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10 px-5 py-1.5 bg-gradient-to-r from-slate-200 to-slate-100 text-slate-800 text-sm font-bold rounded-full whitespace-nowrap shadow-xl shadow-slate-300/50">
-                    POPLARE
+                    POPOLARE
                   </div>
                 )}
                 <div className="p-8">
