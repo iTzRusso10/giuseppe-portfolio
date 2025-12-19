@@ -117,7 +117,7 @@ function PricingPage() {
 
         {/* Cards View */}
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 mb-16">
           {PACKAGES.map((pkg) => {
             const isSilver = pkg.id === 'standard'
             const isGold = pkg.id === 'pro'
