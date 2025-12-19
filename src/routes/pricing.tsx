@@ -402,7 +402,7 @@ function PricingPage() {
                 </li>
                 <li className="flex items-center justify-between p-3 rounded-lg bg-slate-700/50 border border-slate-600">
                   <span className="text-gray-300">Prenotazioni online</span>
-                  <span className="text-cyan-400 font-semibold">+€350</span>
+                  <span className="text-cyan-400 font-semibold">+€150</span>
                 </li>
                 <li className="flex items-center justify-between p-3 rounded-lg bg-slate-700/50 border border-slate-600">
                   <span className="text-gray-300">E-commerce</span>
