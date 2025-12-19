@@ -341,30 +341,6 @@ function PricingPage() {
                     </div>
                   )}
 
-                  {/* Assistance */}
-                  <div
-                    className={`mb-6 p-3 rounded-lg border ${
-                      isSilver
-                        ? 'bg-slate-700/50 border-slate-300/30'
-                        : isGold
-                          ? 'bg-slate-700/50 border-yellow-400/30'
-                          : 'bg-slate-700/50 border-slate-600'
-                    }`}
-                  >
-                    <p
-                      className={`text-sm ${
-                        isSilver
-                          ? 'text-gray-300'
-                          : isGold
-                            ? 'text-yellow-200'
-                            : 'text-gray-400'
-                      }`}
-                    >
-                      Assistenza:
-                    </p>
-                    <p className="text-white font-medium">{pkg.assistance}</p>
-                  </div>
-
                   {/* CTA */}
                   <a
                     href="#contact"
