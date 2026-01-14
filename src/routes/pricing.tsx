@@ -1,5 +1,13 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { ArrowLeft, Check, Sparkles, Star, X, Zap } from 'lucide-react'
+import { useState } from 'react'
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
 
 export const Route = createFileRoute('/pricing')({
   component: PricingPage,
@@ -21,6 +29,18 @@ interface Package {
   popular?: boolean
   ctaText: string
 }
+
+interface Addon {
+  id: string
+  name: string
+  price: number
+}
+
+const ADDONS: Array<Addon> = [
+  { id: 'extra-page', name: 'Pagina extra', price: 80 },
+  { id: 'ecommerce', name: 'E-commerce', price: 490 },
+  { id: 'multilingual', name: 'Multilingua', price: 180 },
+]
 
 const PACKAGES: Array<Package> = [
   {
@@ -95,13 +115,75 @@ const PACKAGES: Array<Package> = [
 ]
 
 function PricingPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isSuccess, setIsSuccess] = useState(false)
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    contact: '',
+    contactMethod: 'email' as 'email' | 'whatsapp',
+    selectedPackage: '',
+    selectedAddons: [] as Array<string>,
+  })
+
   const handleWhatsAppClick = (e: React.MouseEvent, packageName: string) => {
     e.preventDefault()
-    window.open(
-      `https://wa.me/3472693212?text=Ciao, sono interessato al ${packageName}`,
-      '_blank',
-    )
+    setFormData((prev) => ({ ...prev, selectedPackage: packageName }))
+    setIsModalOpen(true)
+    setIsSuccess(false)
   }
+
+  const handleAddonToggle = (addonId: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      selectedAddons: prev.selectedAddons.includes(addonId)
+        ? prev.selectedAddons.filter((id) => id !== addonId)
+        : [...prev.selectedAddons, addonId],
+    }))
+  }
+
+  const calculateTotal = () => {
+    const pkg = PACKAGES.find((p) => p.name === formData.selectedPackage)
+    const basePrice = pkg?.price || 0
+    const addonsPrice = formData.selectedAddons.reduce((sum, addonId) => {
+      const addon = ADDONS.find((a) => a.id === addonId)
+      return sum + (addon?.price || 0)
+    }, 0)
+    return basePrice + addonsPrice
+  }
+
+  const getSelectedPackagePrice = () => {
+    const pkg = PACKAGES.find((p) => p.name === formData.selectedPackage)
+    return pkg?.price || 0
+  }
+
+  const getAddonsTotal = () => {
+    return formData.selectedAddons.reduce((sum, addonId) => {
+      const addon = ADDONS.find((a) => a.id === addonId)
+      return sum + (addon?.price || 0)
+    }, 0)
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    // Qui puoi inviare i dati al server
+    console.log('Form data:', formData)
+    setIsSuccess(true)
+  }
+
+  const resetAndCloseModal = () => {
+    setIsSuccess(false)
+    setFormData({
+      firstName: '',
+      lastName: '',
+      contact: '',
+      contactMethod: 'email',
+      selectedPackage: '',
+      selectedAddons: [],
+    })
+    setIsModalOpen(false)
+  }
+
   return (
     <div className="bg-gradient-to-b from-slate-900 to-slate-950 min-h-screen pt-32 pb-20">
       {/* Back Button */}
@@ -433,14 +515,345 @@ function PricingPage() {
             Contattami per un preventivo personalizzato su misura per le tue
             esigenze.
           </p>
-          <a
-            href="#contact"
+          <button
+            onClick={() => {
+              setIsModalOpen(true)
+              setIsSuccess(false)
+            }}
             className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300"
           >
             Richiedi un preventivo
-          </a>
+          </button>
         </div>
       </div>
+
+      {/* Modal */}
+      <Dialog
+        open={isModalOpen}
+        onOpenChange={(open) => {
+          if (!open) resetAndCloseModal()
+          else setIsModalOpen(open)
+        }}
+      >
+        <DialogContent className="bg-slate-800 border-slate-700 text-white max-w-2xl max-h-[90vh] overflow-y-auto">
+          {!isSuccess ? (
+            <form onSubmit={handleSubmit}>
+              <DialogHeader>
+                <DialogTitle className="text-2xl font-bold text-white">
+                  Richiedi Preventivo
+                </DialogTitle>
+              </DialogHeader>
+
+              <DialogFooter></DialogFooter>
+              <div className="space-y-6 mt-6">
+                {/* Package Selection */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-3">
+                    Seleziona Pacchetto <span className="text-red-400">*</span>
+                  </label>
+                  <div className="grid gap-3">
+                    {PACKAGES.map((pkg) => {
+                      const isSelected = formData.selectedPackage === pkg.name
+                      const isSilver = pkg.id === 'standard'
+                      const isGold = pkg.id === 'pro'
+
+                      return (
+                        <button
+                          key={pkg.id}
+                          type="button"
+                          onClick={() =>
+                            setFormData({
+                              ...formData,
+                              selectedPackage: pkg.name,
+                            })
+                          }
+                          className={`relative p-4 rounded-lg border-2 transition-all duration-300 text-left ${
+                            isSelected
+                              ? isSilver
+                                ? 'bg-gradient-to-br from-slate-700 via-slate-600 to-slate-700 border-slate-300 shadow-lg shadow-slate-300/30'
+                                : isGold
+                                  ? 'bg-gradient-to-br from-slate-700 via-yellow-900/20 to-slate-700 border-yellow-400 shadow-lg shadow-yellow-400/30'
+                                  : 'bg-gradient-to-br from-slate-700 to-slate-600 border-cyan-500 shadow-lg shadow-cyan-500/30'
+                              : 'bg-slate-700/50 border-slate-600 hover:border-slate-500'
+                          }`}
+                        >
+                          <div className="flex items-center gap-3">
+                            {/* Icon */}
+                            <div
+                              className={`w-12 h-12 rounded-lg flex items-center justify-center shrink-0 ${
+                                isSilver
+                                  ? 'bg-gradient-to-br from-slate-200 to-slate-400'
+                                  : isGold
+                                    ? 'bg-gradient-to-br from-yellow-300 to-yellow-500'
+                                    : 'bg-gradient-to-br from-cyan-500 to-indigo-600'
+                              }`}
+                            >
+                              <div className="text-white">{pkg.icon}</div>
+                            </div>
+
+                            {/* Info */}
+                            <div className="flex-1">
+                              <div className="flex items-baseline gap-2 mb-1">
+                                <h3
+                                  className={`text-lg font-bold ${
+                                    isSilver
+                                      ? 'text-slate-200'
+                                      : isGold
+                                        ? 'text-yellow-300'
+                                        : 'text-cyan-400'
+                                  }`}
+                                >
+                                  {pkg.id === 'base'
+                                    ? 'BASE'
+                                    : pkg.id === 'standard'
+                                      ? 'SILVER'
+                                      : 'GOLD'}
+                                </h3>
+                                {pkg.popular && (
+                                  <span className="text-xs px-2 py-0.5 bg-slate-300 text-slate-800 rounded-full font-semibold">
+                                    Popolare
+                                  </span>
+                                )}
+                              </div>
+                              <p className="text-sm text-gray-300">
+                                {pkg.subtitle}
+                              </p>
+                            </div>
+
+                            {/* Price */}
+                            <div className="text-right">
+                              <div
+                                className={`text-2xl font-bold ${
+                                  isSilver
+                                    ? 'text-white'
+                                    : isGold
+                                      ? 'text-yellow-300'
+                                      : 'text-cyan-400'
+                                }`}
+                              >
+                                €{pkg.price}
+                              </div>
+                              {pkg.originalPrice && (
+                                <div className="text-xs text-gray-400 line-through">
+                                  €{pkg.originalPrice}
+                                </div>
+                              )}
+                            </div>
+
+                            {/* Selected Indicator */}
+                            {isSelected && (
+                              <div
+                                className={`absolute -top-1 -right-1 w-6 h-6 rounded-full flex items-center justify-center ${
+                                  isSilver
+                                    ? 'bg-slate-300'
+                                    : isGold
+                                      ? 'bg-yellow-400'
+                                      : 'bg-cyan-500'
+                                }`}
+                              >
+                                <Check size={16} className="text-white" />
+                              </div>
+                            )}
+                          </div>
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
+
+                {/* Personal Info */}
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Nome <span className="text-red-400">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.firstName}
+                      onChange={(e) =>
+                        setFormData({ ...formData, firstName: e.target.value })
+                      }
+                      className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-cyan-500 transition-colors"
+                      placeholder="Mario"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Cognome <span className="text-red-400">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.lastName}
+                      onChange={(e) =>
+                        setFormData({ ...formData, lastName: e.target.value })
+                      }
+                      className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-cyan-500 transition-colors"
+                      placeholder="Rossi"
+                    />
+                  </div>
+                </div>
+
+                {/* Contact Method Selection */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                    Preferisco ricevere il preventivo via:
+                  </label>
+                  <div className="grid grid-cols-2 gap-3">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setFormData({ ...formData, contactMethod: 'email' })
+                      }
+                      className={`px-4 py-3 rounded-lg font-medium transition-all ${
+                        formData.contactMethod === 'email'
+                          ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/30'
+                          : 'bg-slate-700 text-gray-300 hover:bg-slate-600'
+                      }`}
+                    >
+                      📧 Email
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setFormData({ ...formData, contactMethod: 'whatsapp' })
+                      }
+                      className={`px-4 py-3 rounded-lg font-medium transition-all ${
+                        formData.contactMethod === 'whatsapp'
+                          ? 'bg-green-500 text-white shadow-lg shadow-green-500/30'
+                          : 'bg-slate-700 text-gray-300 hover:bg-slate-600'
+                      }`}
+                    >
+                      💬 WhatsApp
+                    </button>
+                  </div>
+                </div>
+
+                {/* Contact Input */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                    {formData.contactMethod === 'email'
+                      ? 'Indirizzo Email'
+                      : 'Numero di Telefono'}{' '}
+                    <span className="text-red-400">*</span>
+                  </label>
+                  <input
+                    type={formData.contactMethod === 'email' ? 'email' : 'tel'}
+                    required
+                    value={formData.contact}
+                    onChange={(e) =>
+                      setFormData({ ...formData, contact: e.target.value })
+                    }
+                    className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-cyan-500 transition-colors"
+                    placeholder={
+                      formData.contactMethod === 'email'
+                        ? 'mario.rossi@example.com'
+                        : '+39 123 456 7890'
+                    }
+                  />
+                </div>
+
+                {/* Addons Selection */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-3">
+                    Aggiunte opzionali:
+                  </label>
+                  <div className="space-y-2">
+                    {ADDONS.map((addon) => (
+                      <label
+                        key={addon.id}
+                        className="flex items-center justify-between p-3 bg-slate-700/50 border border-slate-600 rounded-lg cursor-pointer hover:bg-slate-700 transition-colors"
+                      >
+                        <div className="flex items-center gap-3">
+                          <input
+                            type="checkbox"
+                            checked={formData.selectedAddons.includes(addon.id)}
+                            onChange={() => handleAddonToggle(addon.id)}
+                            className="w-5 h-5 rounded border-slate-500 text-cyan-500 focus:ring-cyan-500 focus:ring-offset-slate-800"
+                          />
+                          <span className="text-white font-medium">
+                            {addon.name}
+                          </span>
+                        </div>
+                        <span className="text-cyan-400 font-semibold">
+                          +€{addon.price}
+                        </span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Total Price */}
+                {formData.selectedPackage && (
+                  <div className="p-4 bg-gradient-to-r from-cyan-500/20 to-indigo-500/20 border border-cyan-500/30 rounded-lg space-y-2">
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-gray-300">Prezzo pacchetto:</span>
+                      <span className="text-white font-semibold">
+                        €{getSelectedPackagePrice()}
+                      </span>
+                    </div>
+                    {formData.selectedAddons.length > 0 && (
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-gray-300">Aggiunte:</span>
+                        <span className="text-white font-semibold">
+                          +€{getAddonsTotal()}
+                        </span>
+                      </div>
+                    )}
+                    <div className="h-px bg-cyan-500/30 my-2" />
+                    <div className="flex items-center justify-between">
+                      <span className="text-lg font-bold text-white">
+                        Totale preventivo:
+                      </span>
+                      <span className="text-2xl font-bold text-cyan-400">
+                        €{calculateTotal()}
+                      </span>
+                    </div>
+                  </div>
+                )}
+
+                {/* Submit Button */}
+                <DialogFooter>
+                  <button
+                    type="submit"
+                    disabled={!formData.selectedPackage}
+                    className="w-full px-6 py-3 bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Richiedi Preventivo
+                  </button>
+                </DialogFooter>
+              </div>
+            </form>
+          ) : (
+            <div className="text-center py-8">
+              <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Check size={40} className="text-green-400" />
+              </div>
+              <DialogTitle className="text-3xl font-bold text-white mb-4">
+                Grazie per averci contattato!
+              </DialogTitle>
+              <p className="text-gray-300 text-lg mb-2">
+                Riceverai il preventivo personalizzato via{' '}
+                {formData.contactMethod === 'email' ? 'email' : 'WhatsApp'}{' '}
+                entro 24 ore.
+              </p>
+              <p className="text-gray-400 mb-8">
+                Ti contatteremo all'indirizzo:{' '}
+                <span className="text-cyan-400 font-semibold">
+                  {formData.contact}
+                </span>
+              </p>
+              <button
+                onClick={resetAndCloseModal}
+                className="px-8 py-3 bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300"
+              >
+                Chiudi
+              </button>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
