@@ -126,6 +126,7 @@ function PricingPage() {
     contactMethod: 'email' as 'email' | 'whatsapp',
     selectedPackage: '',
     selectedAddons: [] as Array<string>,
+    notes: '',
   })
 
   const handleWhatsAppClick = (e: React.MouseEvent, packageName: string) => {
@@ -187,6 +188,7 @@ function PricingPage() {
           selectedPackage: formData.selectedPackage,
           selectedAddons: formData.selectedAddons,
           totalPrice: calculateTotal(),
+          notes: formData.notes,
         },
         addonsDetails,
       )
@@ -214,6 +216,7 @@ function PricingPage() {
       contactMethod: 'email',
       selectedPackage: '',
       selectedAddons: [],
+      notes: '',
     })
     setIsModalOpen(false)
   }
@@ -785,6 +788,25 @@ function PricingPage() {
                         : '+39 123 456 7890'
                     }
                   />
+                </div>
+
+                {/* Notes */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                    Note aggiuntive (opzionale)
+                  </label>
+                  <textarea
+                    value={formData.notes}
+                    onChange={(e) =>
+                      setFormData({ ...formData, notes: e.target.value })
+                    }
+                    rows={4}
+                    className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-cyan-500 transition-colors resize-none"
+                    placeholder="Hai richieste particolari o vuoi aggiungere dettagli? Scrivi qui..."
+                  />
+                  <p className="text-xs text-gray-400 mt-1">
+                    Es: funzionalità specifiche, tempistiche, ecc.
+                  </p>
                 </div>
 
                 {/* Addons Selection */}
