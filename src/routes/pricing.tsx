@@ -8,6 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
+import { sendQuoteRequest } from '@/hook/send-email'
 
 export const Route = createFileRoute('/pricing')({
   component: PricingPage,
@@ -117,6 +118,7 @@ const PACKAGES: Array<Package> = [
 function PricingPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -164,15 +166,47 @@ function PricingPage() {
     }, 0)
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Qui puoi inviare i dati al server
-    console.log('Form data:', formData)
-    setIsSuccess(true)
+    setIsLoading(true)
+
+    try {
+      // Prepara i dettagli delle aggiunte
+      const addonsDetails = formData.selectedAddons.map((addonId) => {
+        const addon = ADDONS.find((a) => a.id === addonId)
+        return { name: addon?.name || '', price: addon?.price || 0 }
+      })
+
+      // Invia la richiesta via email
+      const result = await sendQuoteRequest(
+        {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          contact: formData.contact,
+          contactMethod: formData.contactMethod,
+          selectedPackage: formData.selectedPackage,
+          selectedAddons: formData.selectedAddons,
+          totalPrice: calculateTotal(),
+        },
+        addonsDetails,
+      )
+
+      if (result.success) {
+        setIsSuccess(true)
+      } else {
+        alert("Errore durante l'invio. Riprova o contattaci direttamente.")
+      }
+    } catch (error) {
+      console.error('Error sending quote:', error)
+      alert("Errore durante l'invio. Riprova o contattaci direttamente.")
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const resetAndCloseModal = () => {
     setIsSuccess(false)
+    setIsLoading(false)
     setFormData({
       firstName: '',
       lastName: '',
@@ -544,7 +578,6 @@ function PricingPage() {
                 </DialogTitle>
               </DialogHeader>
 
-              <DialogFooter></DialogFooter>
               <div className="space-y-6 mt-6">
                 {/* Package Selection */}
                 <div>
@@ -817,10 +850,17 @@ function PricingPage() {
                 <DialogFooter>
                   <button
                     type="submit"
-                    disabled={!formData.selectedPackage}
-                    className="w-full px-6 py-3 bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={!formData.selectedPackage || isLoading}
+                    className="w-full px-6 py-3 bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
-                    Richiedi Preventivo
+                    {isLoading ? (
+                      <>
+                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        Invio in corso...
+                      </>
+                    ) : (
+                      'Richiedi Preventivo'
+                    )}
                   </button>
                 </DialogFooter>
               </div>
@@ -839,7 +879,11 @@ function PricingPage() {
                 entro 24 ore.
               </p>
               <p className="text-gray-400 mb-8">
-                Ti contatteremo all'indirizzo:{' '}
+                Ti contatteremo{' '}
+                {formData.contactMethod === 'email'
+                  ? "all'indirizzo"
+                  : 'al numero'}
+                :{' '}
                 <span className="text-cyan-400 font-semibold">
                   {formData.contact}
                 </span>
