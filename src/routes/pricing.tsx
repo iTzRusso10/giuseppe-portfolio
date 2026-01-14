@@ -98,7 +98,7 @@ function PricingPage() {
   const handleWhatsAppClick = (e: React.MouseEvent, packageName: string) => {
     e.preventDefault()
     window.open(
-      `https://wa.me/3472693212?text=Ciao,sono interessato al ${packageName}`,
+      `https://wa.me/3472693212?text=Ciao, sono interessato al ${packageName}`,
       '_blank',
     )
   }
