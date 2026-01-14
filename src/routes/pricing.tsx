@@ -358,7 +358,6 @@ function PricingPage() {
                   {/* CTA */}
                   <a
                     onClick={(e) => handleWhatsAppClick(e, pkg.name)}
-                    href="#contact"
                     className={`block w-full px-6 py-3 rounded-lg font-semibold text-center transition-all duration-300 mt-auto ${
                       isSilver
                         ? 'bg-gradient-to-br from-slate-200 to-slate-400'
