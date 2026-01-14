@@ -358,9 +358,9 @@ function PricingPage() {
                   {/* CTA */}
                   <a
                     onClick={(e) => handleWhatsAppClick(e, pkg.name)}
-                    className={`block w-full px-6 py-3 rounded-lg font-semibold text-center transition-all duration-300 mt-auto ${
+                    className={`block w-full px-6 py-3 rounded-lg font-semibold text-center transition-all duration-300 mt-auto cursor-pointer ${
                       isSilver
-                        ? 'bg-gradient-to-br from-slate-200 to-slate-400'
+                        ? 'bg-gradient-to-br from-slate-200 to-slate-400 hover:bg-slate-300/80 hover:shadow-lg hover:shadow-slate-300/50'
                         : isGold
                           ? 'bg-gradient-to-r from-yellow-300 to-yellow-400 text-yellow-900 hover:shadow-lg hover:shadow-yellow-400/50'
                           : 'bg-gradient-to-r from-cyan-500 to-indigo-600 text-white hover:shadow-lg hover:shadow-cyan-500/50'
