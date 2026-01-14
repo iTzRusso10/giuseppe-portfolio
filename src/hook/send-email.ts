@@ -69,38 +69,36 @@ export const sendQuoteRequest = async (
     const message = `
 🎯 NUOVA RICHIESTA PREVENTIVO
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📋 DATI CLIENTE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 Nome: ${formData.firstName} ${formData.lastName}
 Contatto preferito: ${formData.contactMethod === 'email' ? '📧 Email' : '💬 WhatsApp'}
 ${formData.contactMethod === 'email' ? 'Email' : 'Telefono'}: ${formData.contact}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+──────────────────────
+
 💼 PACCHETTO RICHIESTO
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ${formData.selectedPackage}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+──────────────────────
+
 ➕ AGGIUNTE OPZIONALI
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ${addonsText}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+──────────────────────
+
 💰 TOTALE PREVENTIVO
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 €${formData.totalPrice}
 ${
   formData.notes
     ? `
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+──────────────────────
 📝 NOTE AGGIUNTIVE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ${formData.notes}
 `
     : ''
 }
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 ⏰ Data richiesta: ${new Date().toLocaleString('it-IT')}
     `.trim()
 
