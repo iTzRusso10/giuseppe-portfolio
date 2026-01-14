@@ -26,68 +26,82 @@ const PACKAGES: Array<Package> = [
   {
     id: 'base',
     name: 'Pacchetto BASE',
-    tagline: 'Essenziale',
-    subtitle: 'Sito Essenziale',
+    tagline: 'Vetrina semplice',
+    subtitle: 'Per farti trovare e contattare',
     price: 350,
     icon: <Sparkles size={24} />,
     features: [
-      '1 pagina',
-      'Design responsive',
-      'Dominio + Hosting + SSL (12 mesi)',
-      'SEO base',
-      'Pulsante contatto',
-      'Prenotazioni online',
+      '1 pagina unica (Home, Chi sei, Servizi, Contatti tutto in una schermata)',
+      'Ottimizzato per smartphone e tablet',
+      'Dominio + hosting + sito sicuro (SSL) per 12 mesi',
+      'Impostazioni base per farti trovare su Google (SEO)',
+      'Pulsante “Chiama” con 1 click',
+      'Elenco dei servizi principali con una breve descrizione (senza pagina dedicata e senza dettagli per ognuno)',
     ],
-    notIncluded: ['Pagine extra', 'Analytics', 'Conversione avanzata'],
+    notIncluded: [
+      'Più pagine dedicate (Servizi / Chi sono / ecc.)',
+      'Tasto WhatsApp fisso',
+      'Prenotazioni online',
+      'Statistiche visite (Analytics)',
+      'Struttura pensata per aumentare richieste/clienti',
+    ],
     assistance: '14 giorni',
-    ctaText: 'Richiedi questo pacchetto',
+    ctaText: 'Voglio il BASE',
   },
   {
     id: 'standard',
     name: 'Pacchetto SILVER',
-    tagline: 'Più Scelto',
-    subtitle: 'Presenza Professionale',
+    tagline: 'Il più scelto',
+    subtitle: 'Professionale + WhatsApp',
     price: 520,
     originalPrice: 640,
     icon: <Star size={24} />,
     features: [
-      '3–4 pagine',
-      'Design personalizzato',
-      'Modulo contatti avanzato',
-      'SEO on-page',
-      'Google Analytics',
-      'Ottimizzazione velocità',
+      '3–4 pagine dedicate: più ordine e più chiarezza (in schermate separate)',
+      'Grafica personalizzata in base al tuo stile',
+      'Pagina Servizi (foto e descrizioni dettagliate per ogni servizio)',
+      'Modulo contatti completo (richieste più chiare e ordinate)',
+      'Tasto WhatsApp fisso: ti scrivono subito senza cercare il numero',
+      'Statistiche visite con Google Analytics',
+      'Sito più veloce (carica in fretta)',
     ],
     includesAllFrom: 'BASE',
     assistance: '60 giorni',
     value: '€820',
     popular: true,
-    ctaText: 'Consigliato per la tua attività',
+    ctaText: 'Consigliato: voglio il SILVER',
   },
   {
     id: 'pro',
     name: 'Pacchetto GOLD',
-    tagline: 'Massimo Valore',
-    subtitle: 'Conversione & Brand',
+    tagline: 'Massimo valore',
+    subtitle: 'Più richieste + prenotazioni online',
     price: 880,
     originalPrice: 1000,
     icon: <Zap size={24} />,
     features: [
-      '5–8 pagine',
-      'Design orientato alla conversione',
-      'SEO tecnica avanzata',
-      'CTA strategiche',
-      'WhatsApp / Calendly',
-      'Hosting premium + CDN',
+      '5–8 pagine utili: più spazio per convincere e aumentare fiducia',
+      'Struttura pensata per far contattare di più (sezioni e testi messi nei punti giusti)',
+      'CTA chiare e ripetute: “Prenota”, “Richiedi info”, “Preventivo” dove serve',
+      'Prenotazioni online: scelgono giorno/ora anche quando sei occupato',
+      'SEO tecnica avanzata (base più solida per Google e prestazioni)',
+      'Hosting premium + CDN (ancora più velocità e stabilità)',
     ],
     includesAllFrom: 'SILVER',
     assistance: '6 mesi prioritari',
     value: '€1.350',
-    ctaText: 'Per chi vuole il massimo',
+    ctaText: 'Voglio il massimo (GOLD)',
   },
 ]
 
 function PricingPage() {
+  const handleWhatsAppClick = (e: React.MouseEvent, packageName: string) => {
+    e.preventDefault()
+    window.open(
+      `https://wa.me/3472693212?text=Ciao,sono interessato al ${packageName}`,
+      '_blank',
+    )
+  }
   return (
     <div className="bg-gradient-to-b from-slate-900 to-slate-950 min-h-screen pt-32 pb-20">
       {/* Back Button */}
@@ -138,7 +152,7 @@ function PricingPage() {
                     POPOLARE
                   </div>
                 )}
-                <div className="p-8">
+                <div className="p-8 flex flex-col h-full">
                   {/* Icon & Name */}
                   <div className="mb-4">
                     <div className="flex items-center gap-3 mb-2">
@@ -343,8 +357,9 @@ function PricingPage() {
 
                   {/* CTA */}
                   <a
+                    onClick={(e) => handleWhatsAppClick(e, pkg.name)}
                     href="#contact"
-                    className={`block w-full px-6 py-3 rounded-lg font-semibold text-center transition-all duration-300 ${
+                    className={`block w-full px-6 py-3 rounded-lg font-semibold text-center transition-all duration-300 mt-auto ${
                       isSilver
                         ? 'bg-gradient-to-br from-slate-200 to-slate-400'
                         : isGold
