@@ -1,0 +1,11 @@
+# robots.txt - Giuseppe Russo Portfolio
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_build/
+
+# Sitemap
+Sitemap: https://giusepperussodev.it/sitemap.xml
+
+# Crawl delay (opzionale, riduce carico server)
+Crawl-delay: 1
