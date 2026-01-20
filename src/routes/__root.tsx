@@ -148,6 +148,20 @@ export const Route = createRootRoute({
       },
     ],
     scripts: [
+      // GA4 - carica gtag.js
+      {
+        async: true,
+        src: 'https://www.googletagmanager.com/gtag/js?id=G-2KZ84H1DRG',
+      },
+      // GA4 - inizializza
+      {
+        children: `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-2KZ84H1DRG');
+        `,
+      },
       // JSON-LD Schema.org per SEO
       {
         type: 'application/ld+json',
