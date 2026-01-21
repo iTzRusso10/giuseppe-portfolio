@@ -11,6 +11,24 @@ import {
 import { sendQuoteRequest } from '@/hook/send-email'
 
 export const Route = createFileRoute('/pricing')({
+  head: () => ({
+    meta: [
+      { title: 'Prezzi | Pacchetti Siti Web | Giuseppe Russo' },
+      {
+        name: 'description',
+        content:
+          'Scegli il pacchetto giusto per il tuo sito: BASE, SILVER o GOLD. Preventivo personalizzato in 24 ore.',
+      },
+      { property: 'og:title', content: 'Prezzi e Pacchetti | Giuseppe Russo' },
+      {
+        property: 'og:description',
+        content:
+          'Pacchetti per siti web professionali: BASE, SILVER, GOLD. Richiedi un preventivo in 24 ore.',
+      },
+      { property: 'og:url', content: 'https://giusepperussodev.it/pricing' },
+    ],
+    links: [{ rel: 'canonical', href: 'https://giusepperussodev.it/pricing' }],
+  }),
   component: PricingPage,
 })
 

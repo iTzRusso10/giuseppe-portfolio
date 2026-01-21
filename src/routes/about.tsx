@@ -2,6 +2,15 @@ import { Link, createFileRoute, useNavigate } from '@tanstack/react-router'
 import { ArrowLeft, Code2, Trophy, Users, Zap } from 'lucide-react'
 
 export const Route = createFileRoute('/about')({
+  head: () => ({
+    meta: [
+      { title: 'Chi sono | Giuseppe Russo' },
+      { name: 'description', content: 'Scopri chi sono e cosa faccio.' },
+      { property: 'og:title', content: 'Chi sono | Giuseppe Russo' },
+      { property: 'og:description', content: 'Scopri chi sono e cosa faccio.' },
+    ],
+    links: [{ rel: 'canonical', href: 'https://giusepperussodev.it/about' }],
+  }),
   component: AboutPage,
 })
 

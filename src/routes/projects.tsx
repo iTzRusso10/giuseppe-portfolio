@@ -1,10 +1,30 @@
 import { Link, createFileRoute, useNavigate } from '@tanstack/react-router'
 import { ArrowLeft, ExternalLink, Github, Star } from 'lucide-react'
-import { useState } from 'react'
 import dashlyImage from '@/images/dashly.png'
 import fitnessImage from '@/images/image.png'
 
 export const Route = createFileRoute('/projects')({
+  head: () => ({
+    meta: [
+      { title: 'Progetti | Portfolio | Giuseppe Russo' },
+      {
+        name: 'description',
+        content:
+          'Una selezione dei miei progetti in React e TypeScript: dashboard, landing page e app con integrazioni.',
+      },
+      {
+        property: 'og:title',
+        content: 'Progetti | Portfolio | Giuseppe Russo',
+      },
+      {
+        property: 'og:description',
+        content:
+          'Scopri i miei lavori: app e siti realizzati con React, TypeScript, TanStack e Tailwind.',
+      },
+      { property: 'og:url', content: 'https://giusepperussodev.it/projects' },
+    ],
+    links: [{ rel: 'canonical', href: 'https://giusepperussodev.it/projects' }],
+  }),
   component: ProjectsPage,
 })
 
