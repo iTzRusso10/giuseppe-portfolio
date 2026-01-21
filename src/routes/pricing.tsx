@@ -13,7 +13,7 @@ import { sendQuoteRequest } from '@/hook/send-email'
 export const Route = createFileRoute('/pricing')({
   head: () => ({
     meta: [
-      { title: 'Prezzi | Pacchetti Siti Web | Giuseppe Russo' },
+      { title: 'Prezzi e Pacchetti | Giuseppe Russo' },
       {
         name: 'description',
         content:

@@ -6,7 +6,7 @@ import fitnessImage from '@/images/image.png'
 export const Route = createFileRoute('/projects')({
   head: () => ({
     meta: [
-      { title: 'Progetti | Portfolio | Giuseppe Russo' },
+      { title: 'Progetti | Giuseppe Russo' },
       {
         name: 'description',
         content:
@@ -14,7 +14,7 @@ export const Route = createFileRoute('/projects')({
       },
       {
         property: 'og:title',
-        content: 'Progetti | Portfolio | Giuseppe Russo',
+        content: 'Progetti | Giuseppe Russo',
       },
       {
         property: 'og:description',
